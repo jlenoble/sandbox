@@ -9,7 +9,8 @@ const allSrcGlob = [
 ];
 const allBuildGlob = [
   'build/src/**/*.js',
-  'build/test/**/*.js'
+  'build/test/**/*.js',
+  'test/**/*.dat'
 ];
 
 export const watch = done => {
