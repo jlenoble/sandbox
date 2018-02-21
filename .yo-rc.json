@@ -1,0 +1,46 @@
+{
+  "generator-wupjs": {
+    "devDeps": {
+      "gulp": "git://github.com/gulpjs/gulp.git#4.0",
+      "plumb-gulp": "*",
+      "autoreload-gulp": "*",
+      "gulp-sourcemaps": "*",
+      "del": "*",
+      "gulp-rename": "*",
+      "gulp-replace": "*",
+      "gulp-wrap": "*",
+      "markdown-include": "*",
+      "chai": "*",
+      "babel-preset-es2015": "*",
+      "babel-plugin-add-module-exports": "*",
+      "gulp-babel": "*",
+      "gulp-eslint": "*",
+      "eslint-config-google": "*",
+      "gulp-mocha": "*",
+      "muter": "*"
+    },
+    "genVersion": "0.3.1",
+    "updated": "2018-02-21T10:39:24.467Z",
+    "created": "2018-02-21T10:39:24.467Z",
+    "version": "0.0.0",
+    "contributors": [],
+    "keywords": [],
+    "deps": {},
+    "peerDeps": {},
+    "name": "sandbox",
+    "description": "Sand box",
+    "author": "Jason Lenoble",
+    "email": "jason.lenoble@gmail.com",
+    "github": "jlenoble",
+    "preprocessors": [],
+    "license": "MIT",
+    "babel": "es2015",
+    "linters": [
+      "EsLint"
+    ],
+    "addons": [],
+    "testRunners": [
+      "Mocha"
+    ]
+  }
+}
