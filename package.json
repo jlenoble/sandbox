@@ -24,7 +24,9 @@
     "url": "https://github.com/jlenoble/sandbox/issues"
   },
   "homepage": "https://github.com/jlenoble/sandbox#readme",
-  "dependencies": {},
+  "dependencies": {
+    "testwriter": "^0.2.0"
+  },
   "devDependencies": {
     "autoreload-gulp": "*",
     "babel-core": "^6.26.0",
