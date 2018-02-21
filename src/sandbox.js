@@ -1,5 +1,3 @@
-export default class Sandbox {
-  constructor () {
-    console.log('Hello world!');
-  }
-}
+import Manager from './manager';
+
+export default Manager;
