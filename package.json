@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/jlenoble/sandbox#readme",
   "dependencies": {
+    "mongoose": "^5.0.6",
     "testwriter": "^0.2.0"
   },
   "devDependencies": {
@@ -35,7 +36,7 @@
     "chai": "*",
     "del": "*",
     "eslint-config-google": "*",
-    "gulp": "git://github.com/gulpjs/gulp.git#4.0",
+    "gulp": "^4.0.0",
     "gulp-babel": "*",
     "gulp-eslint": "*",
     "gulp-mocha": "*",
