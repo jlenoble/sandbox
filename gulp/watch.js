@@ -1,6 +1,6 @@
 import gulp from 'gulp';
 import {build} from './build';
-import {test} from './test';
+import {test, testNewer} from './test';
 
 const allSrcGlob = [
   'src/**/*.js',
@@ -9,13 +9,16 @@ const allSrcGlob = [
 ];
 const allBuildGlob = [
   'build/src/**/*.js',
+  'test/**/*.dat',
+];
+const allTestGlob = [
   'build/test/**/*.js',
-  'test/**/*.dat'
 ];
 
 export const watch = done => {
   gulp.watch(allSrcGlob, build);
   gulp.watch(allBuildGlob, test);
+  gulp.watch(allTestGlob, testNewer);
   done();
 };
 
