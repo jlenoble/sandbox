@@ -1,1 +1,2 @@
-export {read} from './read';
+export * from './delete-lines';
+export * from './read';
