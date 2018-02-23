@@ -1,47 +1,79 @@
-import fs from 'fs';
 import TestWriter from 'testwriter';
+import db, {dbUri, readFactory, createFactory, deleteFactory} from './db';
 
 export default class Manager {
-  constructor ({title, data}) {
-    let _data = data;
-
-    if (typeof data === 'string') {
-      _data = {};
-      fs.readFileSync(data).toString().split('\n').forEach(line => {
-        if (line) {
-          _data[line] = undefined;
-        }
-      });
+  constructor ({title} = {}) {
+    if (!title) {
+      throw new Error('You must provide a valid title to the manager');
     }
 
-    Object.defineProperties(this, {
-      title: {
-        value: title,
-      },
-
-      data: {
-        value: data,
-      },
-
-      writer: {
-        value: new TestWriter(_data),
-      },
+    Object.defineProperty(this, 'title', {
+      value: title,
     });
   }
 
-  run () {
-    try {
-      this.writer.defineTests([
-        this.title,
-        function (key) {
-          return key;
-        },
-        function () {},
-      ], 1, describe, it);
-    } catch (err) {
-      if (err.message.includes('No descriptions provided for tests')) {
-        console.warn(`No data in ${this.data}`);
+  run ({
+    title, data, arity = 1, describe, it,
+    itFunc = function (key) {
+      return key;
+    },
+    doFunc = function () {},
+  }) {
+    describe(this.title, function () {
+      before(function () {
+        return db.connect(dbUri);
+      });
+
+      after(function () {
+        return db.connection.close();
+      });
+
+      try {
+        const funcs = title ? [title, itFunc, doFunc] : [itFunc, doFunc];
+
+        new TestWriter(data).defineTests(funcs, arity, describe, it);
+      } catch (err) {
+        if (err.message.includes('No descriptions provided for tests')) {
+          return; // Ok to have no input
+        }
+        throw err;
       }
-    }
+    });
+  }
+
+  add ({
+    Model, title, data, describe, it,
+    itFunc = function (key) {
+      return key;
+    },
+  }) {
+    this.run({
+      title, data, describe, it, itFunc,
+      doFunc: createFactory(Model),
+    });
+  }
+
+  remove ({
+    Model, title, data, describe, it,
+    itFunc = function (key) {
+      return key;
+    },
+  }) {
+    this.run({
+      title, data, describe, it, itFunc,
+      doFunc: deleteFactory(Model),
+    });
+  }
+
+  find ({
+    Model, title, data, describe, it,
+    itFunc = function (key) {
+      return key;
+    },
+  }) {
+    this.run({
+      title, data, describe, it, itFunc,
+      doFunc: readFactory(Model),
+    });
   }
 }
