@@ -39,14 +39,17 @@
     "gulp": "^4.0.0",
     "gulp-babel": "*",
     "gulp-eslint": "*",
+    "gulp-ignore": "^2.0.2",
     "gulp-mocha": "*",
     "gulp-rename": "*",
     "gulp-replace": "*",
     "gulp-sourcemaps": "*",
+    "gulp-tap": "^1.0.1",
     "gulp-wrap": "*",
     "markdown-include": "*",
     "muter": "*",
-    "plumb-gulp": "*"
+    "plumb-gulp": "*",
+    "touch-ms": "^0.1.0"
   },
   "peerDependencies": {}
 }
