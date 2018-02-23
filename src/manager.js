@@ -18,19 +18,20 @@ export default class Manager {
       return key;
     },
     doFunc = function () {},
+    beforeFunc = function () {},
+    afterFunc = function () {},
   }) {
     describe(this.title, function () {
       before(function () {
-        return db.connect(dbUri);
+        return db.connect(dbUri).then(beforeFunc);
       });
 
       after(function () {
-        return db.connection.close();
+        return db.connection.close().then(afterFunc);
       });
 
       try {
         const funcs = title ? [title, itFunc, doFunc] : [itFunc, doFunc];
-
         new TestWriter(data).defineTests(funcs, arity, describe, it);
       } catch (err) {
         if (err.message.includes('No descriptions provided for tests')) {
