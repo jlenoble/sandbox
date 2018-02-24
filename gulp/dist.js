@@ -4,12 +4,12 @@ import babel from 'gulp-babel';
 
 const libDir = 'lib';
 const srcGlob = [
-  'src/**/*.js'
+  'src/**/*.js',
 ];
 
-export const dist = () => {
+export function dist () {
   return gulp.src(srcGlob, {
-    since: gulp.lastRun(dist)
+    since: gulp.lastRun(dist),
   })
     .pipe(babel())
     .pipe(gulp.dest(libDir));

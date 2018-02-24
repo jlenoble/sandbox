@@ -8,7 +8,7 @@ const dataGlob = [
   'test/**/*.dat', '!test/**/auto/*.dat',
 ];
 
-export const run = () => {
+export function run () {
   const tapped = [];
 
   return new Promise((resolve, reject) => {

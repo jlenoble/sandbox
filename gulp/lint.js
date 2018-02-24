@@ -3,10 +3,10 @@ import eslint from 'gulp-eslint';
 
 const allSrcGlob = [
   'src/**/*.js',
-  'test/**/*.js'
+  'test/**/*.js',
 ];
 
-export const lint = () => {
+export function lint () {
   return gulp.src(allSrcGlob)
     .pipe(eslint())
     .pipe(eslint.format());

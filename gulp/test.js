@@ -3,17 +3,17 @@ import mocha from 'gulp-mocha';
 import './build';
 
 const testGlob = [
-  'build/test/**/*.test.js'
+  'build/test/**/*.test.js',
 ];
 
-export const test = () => {
+export function test () {
   return gulp.src(testGlob, {
     read: false,
   })
     .pipe(mocha());
 };
 
-export const testNewer = () => {
+export function testNewer () {
   return gulp.src(testGlob, {
     read: false,
     since: gulp.lastRun(testNewer),

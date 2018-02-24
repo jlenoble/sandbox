@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import del from 'del';
 
-export const clean = () => {
+export function clean () {
   return del('build');
 };
 

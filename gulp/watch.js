@@ -17,7 +17,7 @@ const allDataGlob = [
   'test/**/*.dat', '!test/**/auto/*.dat',
 ];
 
-export const watch = done => {
+export function watch (done) {
   gulp.watch(allSrcGlob, build);
   gulp.watch(allBuildGlob, test);
   gulp.watch(allTestGlob, testNewer);
