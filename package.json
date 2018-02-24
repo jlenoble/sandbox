@@ -38,6 +38,7 @@
     "eslint-config-google": "*",
     "gulp": "^4.0.0",
     "gulp-babel": "*",
+    "gulp-cached": "^1.1.1",
     "gulp-eslint": "*",
     "gulp-ignore": "^2.0.2",
     "gulp-mocha": "*",
@@ -48,6 +49,7 @@
     "gulp-wrap": "*",
     "markdown-include": "*",
     "muter": "*",
+    "node-notifier": "^5.2.1",
     "plumb-gulp": "*",
     "touch-ms": "^0.1.0"
   },
