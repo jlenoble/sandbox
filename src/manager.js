@@ -23,11 +23,13 @@ export default class Manager {
   }) {
     describe(this.title, function () {
       before(function () {
-        return db.connect(dbUri).then(beforeFunc);
+        // eslint-disable-next-line no-invalid-this
+        return db.connect(dbUri).then(beforeFunc.bind(this));
       });
 
       after(function () {
-        return db.connection.close().then(afterFunc);
+        // eslint-disable-next-line no-invalid-this
+        return db.connection.close().then(afterFunc.bind(this));
       });
 
       try {
