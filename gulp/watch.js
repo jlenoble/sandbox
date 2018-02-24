@@ -14,7 +14,7 @@ const allTestGlob = [
   'build/test/**/*.js',
 ];
 const allDataGlob = [
-  'test/**/*.dat',
+  'test/**/*.dat', '!test/**/auto/*.dat',
 ];
 
 export const watch = done => {

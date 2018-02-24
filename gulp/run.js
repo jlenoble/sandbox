@@ -5,7 +5,7 @@ import tap from 'gulp-tap';
 import touchMs from 'touch-ms';
 
 const dataGlob = [
-  'test/**/*.dat',
+  'test/**/*.dat', '!test/**/auto/*.dat',
 ];
 
 export const run = () => {
