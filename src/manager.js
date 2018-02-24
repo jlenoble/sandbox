@@ -12,7 +12,7 @@ export default class Manager {
     });
   }
 
-  run ({
+  async run ({
     title, data, arity = 1, describe, it,
     itFunc = function (key) {
       return key;
@@ -21,15 +21,15 @@ export default class Manager {
     beforeFunc = function () {},
     afterFunc = function () {},
   }) {
-    describe(this.title, function () {
-      before(function () {
-        // eslint-disable-next-line no-invalid-this
-        return db.connect(dbUri).then(beforeFunc.bind(this));
+    describe(this.title, async function () {
+      before(async function () {
+        await db.connect(dbUri);
+        return beforeFunc.call(this); // eslint-disable-line no-invalid-this
       });
 
-      after(function () {
-        // eslint-disable-next-line no-invalid-this
-        return db.connection.close().then(afterFunc.bind(this));
+      after(async function () {
+        await db.connection.close();
+        return afterFunc.call(this); // eslint-disable-line no-invalid-this
       });
 
       try {
@@ -44,39 +44,41 @@ export default class Manager {
     });
   }
 
-  add ({
+  async add ({
     Model, title, data, describe, it,
     itFunc = function (key) {
       return key;
     },
   }) {
-    this.run({
-      title, data, describe, it, itFunc,
+    return this.run({
+      title, data: await data, describe, it, itFunc,
       doFunc: createFactory(Model),
     });
   }
 
-  remove ({
+  async remove ({
     Model, title, data, describe, it,
     itFunc = function (key) {
       return key;
     },
   }) {
-    this.run({
-      title, data, describe, it, itFunc,
+    return this.run({
+      title, data: await data, describe, it, itFunc,
       doFunc: deleteFactory(Model),
     });
   }
 
-  find ({
+  async find ({
     Model, title, data, describe, it,
     itFunc = function (key) {
       return key;
     },
   }) {
-    this.run({
-      title, data, describe, it, itFunc,
+    return this.run({
+      title, data: await data, describe, it, itFunc,
       doFunc: readFactory(Model),
     });
   }
 }
+
+Manager.UI = {};
