@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/jlenoble/sandbox#readme",
   "dependencies": {
+    "fs-extra": "^5.0.0",
     "mongoose": "^5.0.6",
     "testwriter": "^0.2.0"
   },
