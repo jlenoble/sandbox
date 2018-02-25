@@ -1,27 +1,29 @@
 import fse from 'fs-extra';
 
-export async function read (filename, func) {
+const processBuffer = (buffer, func) => {
   let data = {};
-  const buffer = await fse.readFile(filename);
 
   buffer.toString().split('\n').forEach(line => {
     if (line) {
-      data[line] = typeof func === 'function' ? func(line): func;
+      if (typeof func === 'function') {
+        func(line, data);
+      } else {
+        data[line] = func;
+      }
     }
   });
 
   return data;
+};
+
+export async function read (filename, func) {
+  return processBuffer(await fse.readFile(filename), func);
 }
 
 export function readSync (filename, func) {
-  let data = {};
-  const buffer = fse.readFileSync(filename);
+  return processBuffer(fse.readFileSync(filename), func);
+}
 
-  buffer.toString().split('\n').forEach(line => {
-    if (line) {
-      data[line] = typeof func === 'function' ? func(line): func;
-    }
-  });
-
-  return data;
+export function readJSONSync (filename) {
+  return JSON.parse(fse.readFileSync(filename));
 }
