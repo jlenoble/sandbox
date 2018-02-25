@@ -9,9 +9,11 @@ const allSrcGlob = [
 ];
 const allBuildGlob = [
   'build/src/**/*.js',
+  'build/test/**/*.js',
+  '!build/test/**/*.test.js',
 ];
 const allTestGlob = [
-  'build/test/**/*.js',
+  'build/test/**/*.test.js',
 ];
 const allDataGlob = [
   'test/**/*.dat', '!test/**/auto/*.dat',
