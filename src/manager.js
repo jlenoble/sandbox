@@ -12,7 +12,7 @@ export default class Manager {
     });
   }
 
-  async run ({
+  run ({
     title, data, arity = 1, describe, it,
     itFunc = function (key) {
       return key;
@@ -21,15 +21,15 @@ export default class Manager {
     beforeFunc = function () {},
     afterFunc = function () {},
   }) {
-    describe(this.title, async function () {
-      before(async function () {
-        await db.connect(dbUri);
-        return beforeFunc.call(this); // eslint-disable-line no-invalid-this
+    describe(this.title, function () {
+      before(function () {
+        // eslint-disable-next-line no-invalid-this
+        return db.connect(dbUri).then(beforeFunc.bind(this));
       });
 
       after(async function () {
-        await db.connection.close();
-        return afterFunc.call(this); // eslint-disable-line no-invalid-this
+        // eslint-disable-next-line no-invalid-this
+        return db.connection.close().then(afterFunc.bind(this));
       });
 
       try {
@@ -44,38 +44,44 @@ export default class Manager {
     });
   }
 
-  async add ({
+  add ({
     Model, title, data, describe, it,
     itFunc = function (key) {
       return key;
     },
+    beforeFunc = function () {},
+    afterFunc = function () {},
   }) {
     return this.run({
-      title, data: await data, describe, it, itFunc,
+      title, data, describe, it, itFunc, beforeFunc, afterFunc,
       doFunc: createFactory(Model),
     });
   }
 
-  async remove ({
+  remove ({
     Model, title, data, describe, it,
     itFunc = function (key) {
       return key;
     },
+    beforeFunc = function () {},
+    afterFunc = function () {},
   }) {
     return this.run({
-      title, data: await data, describe, it, itFunc,
+      title, data, describe, it, itFunc, beforeFunc, afterFunc,
       doFunc: deleteFactory(Model),
     });
   }
 
-  async find ({
+  find ({
     Model, title, data, describe, it,
     itFunc = function (key) {
       return key;
     },
+    beforeFunc = function () {},
+    afterFunc = function () {},
   }) {
     return this.run({
-      title, data: await data, describe, it, itFunc,
+      title, data, describe, it, itFunc, beforeFunc, afterFunc,
       doFunc: readFactory(Model),
     });
   }
