@@ -16,7 +16,7 @@ export function test () {
 export function testNewer () {
   return gulp.src(testGlob, {
     read: false,
-    since: gulp.lastRun(testNewer),
+    since: gulp.lastRun(testNewer) || gulp.lastRun(test),
   })
     .pipe(mocha());
 };
