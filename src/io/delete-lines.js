@@ -1,8 +1,9 @@
-import fs from 'fs';
+import fse from 'fs-extra';
 
-export function deleteLines (filename, func) {
-  const data = fs.readFileSync(filename)
-    .toString()
+export async function deleteLines (filename, func) {
+  let data = await fse.readFile(filename);
+
+  data = data.toString()
     .split('\n')
     .filter(line => {
       if (typeof func === 'function') {
@@ -17,5 +18,5 @@ export function deleteLines (filename, func) {
     })
     .join('\n');
 
-  fs.writeFileSync(filename, data);
+  return fse.writeFile(filename, data);
 }
