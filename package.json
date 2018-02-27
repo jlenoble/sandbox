@@ -52,7 +52,7 @@
     "markdown-include": "*",
     "muter": "*",
     "node-notifier": "^5.2.1",
-    "plumb-gulp": "*",
+    "plumb-gulp": "^0.1.2",
     "stat-again": "^0.3.0",
     "touch-ms": "^0.1.0"
   },
