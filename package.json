@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/jlenoble/sandbox#readme",
   "dependencies": {
+    "deasync": "^0.1.12",
     "fs-extra": "^5.0.0",
     "mongoose": "^5.0.6",
     "testwriter": "^0.2.0"
@@ -52,6 +53,7 @@
     "muter": "*",
     "node-notifier": "^5.2.1",
     "plumb-gulp": "*",
+    "stat-again": "^0.3.0",
     "touch-ms": "^0.1.0"
   },
   "peerDependencies": {}
