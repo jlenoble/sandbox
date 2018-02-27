@@ -7,15 +7,15 @@ import {lastQueryFile} from '../src/config';
 import {readSync, readJSONSync, write, writeJSON} from '../src/io';
 
 export default function crud ({
-  Model, fileStem, action, actionTitle, itFunc,
+  Model, tag, action, itFunc,
   formatData = function (line, data) {
     // eslint-disable-next-line no-param-reassign
     data[line] = {title: line};
   },
 }) {
-  const title = Manager.getUI(`${fileStem}-${action}`);
+  const title = Manager.getUI(`${tag}-${action}`);
   const datafile = path.join(__dirname.replace('build/', ''),
-    `private/${fileStem}/data/${action}.dat`);
+    `private/${tag}/data/${action}.dat`);
 
   let data = readSync(datafile, formatData);
   let newData;
