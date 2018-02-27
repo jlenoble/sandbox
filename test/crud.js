@@ -13,7 +13,7 @@ export default function crud ({
     data[line] = {title: line};
   },
 }) {
-  const title = 'Bienvenue dans votre gestionnaire personnel';
+  const title = Manager.getUI(`${fileStem}-${action}`);
   const datafile = path.join(__dirname.replace('build/', ''),
     `private/${fileStem}/data/${action}.dat`);
 
@@ -38,6 +38,10 @@ export default function crud ({
 
     write(datafile, '');
     return;
+  }
+
+  if (action === 'list') {
+    _action = 'find';
   }
 
   const muter = Muter(console); // eslint-disable-line new-cap
@@ -73,6 +77,16 @@ export default function crud ({
         } catch (err) {
           console.log(err.message);
         }
+      }
+
+      if (action === 'list') {
+        waitForFile(lastQueryFile);
+
+        readJSONSync(lastQueryFile).forEach(obj => {
+          delete obj._id; // eslint-disable-line no-param-reassign
+          delete obj.__v; // eslint-disable-line no-param-reassign
+          console.log(`- ${JSON.stringify(obj)}`);
+        });
       }
     },
   });
