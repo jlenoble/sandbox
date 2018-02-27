@@ -13,6 +13,10 @@ import './gulp/tdd';
 import './gulp/watch';
 import './gulp/lint';
 
-usePlumbedGulpSrc();
+usePlumbedGulpSrc({
+  filterout: err => {
+    return err.message.includes('Command failed: mocha');
+  },
+});
 
 gulp.task('default', autoreload('tdd'));
