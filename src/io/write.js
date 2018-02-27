@@ -5,5 +5,5 @@ export async function write (filename, data) {
 }
 
 export async function writeJSON (filename, data) {
-  return fse.outputFile(filename, JSON.stringify(data));
+  return fse.outputFile(filename, JSON.stringify(data, null, 2));
 }
