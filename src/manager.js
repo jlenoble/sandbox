@@ -58,10 +58,9 @@ Manager.initUI = function () {
 };
 
 Manager.run = function ({
-  title, data, arity = 1, describe, it,
-  itFunc = function (key) {
-    return key;
-  },
+  title, describe, it, itFunc,
+  data = {'dummy': {}},
+  arity = 1,
   doFunc = function () {},
   beforeFunc = function () {},
   afterFunc = function () {},
@@ -84,7 +83,20 @@ Manager.run = function ({
     });
 
     try {
-      const funcs = title ? [ui[title], itFunc, doFunc] : [itFunc, doFunc];
+      const funcs = [];
+      if (title) {
+        funcs.push(ui[title] || title);
+      }
+      if (itFunc) {
+        funcs.push(itFunc);
+      }
+      if (funcs.length === 0) {
+        funcs.push(function (key) {
+          return key;
+        });
+      }
+      funcs.push(doFunc);
+
       new TestWriter(data).defineTests(funcs, arity, describe, it);
     } catch (err) {
       if (err.message.includes('No descriptions provided for tests')) {
