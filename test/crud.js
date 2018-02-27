@@ -30,7 +30,10 @@ export default function crud ({
   if (action === 'do-update') {
     try {
       data = readJSONSync(datafile);
-      data = {[data.title]: data};
+      data = data.reduce((obj, data) => {
+        obj[data.title] = data; // eslint-disable-line no-param-reassign
+        return obj;
+      }, {});
       Manager.update({
         title, Model, data, itFunc, describe, it,
       });
@@ -69,7 +72,7 @@ export default function crud ({
         try {
           data = readJSONSync(lastQueryFile)[0];
           Object.assign(data, newData);
-          return writeJSON(doUpdateFile, data).then(() => {
+          return writeJSON(doUpdateFile, [data]).then(() => {
             touchMs(doUpdateFile);
           });
         } catch (err) {
