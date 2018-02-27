@@ -13,7 +13,7 @@ export default function crud ({
     data[line] = {title: line};
   },
 }) {
-  const title = Manager.getUI(`${tag}-${action}`);
+  const title = `${tag}-${action}`;
   const datafile = path.join(__dirname.replace('build/', ''),
     `private/${tag}/data/${action}.dat`);
 
@@ -79,7 +79,7 @@ export default function crud ({
         }
       }
 
-      if (action === 'list') {
+      if (action === 'list' || action === 'find') {
         waitForFile(lastQueryFile);
 
         readJSONSync(lastQueryFile).forEach(obj => {
