@@ -49,22 +49,20 @@ export default function crud ({
   Manager[_action]({
     title, Model, data, itFunc, describe, it,
     beforeFunc () {
-      if (action === 'update') {
-        muter.capture();
-      }
+      muter.capture();
     },
     afterFunc () {
+      const logs = muter.getLogs();
+      muter.uncapture();
+
+      const errorMessage = `1) ${itFunc(Object.keys(data)[0], data)}`;
+
+      if (logs && logs.includes(errorMessage)) {
+        // A test failed
+        return;
+      }
+
       if (action === 'update') {
-        const logs = muter.getLogs();
-        muter.uncapture();
-
-        const errorMessage = `1) ${itFunc(Object.keys(data)[0], data)}`;
-
-        if (logs.includes(errorMessage)) {
-          // A test failed
-          return;
-        }
-
         const doUpdateFile = datafile.replace('update', 'do-update');
         waitForFile(lastQueryFile);
 
