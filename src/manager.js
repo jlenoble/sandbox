@@ -33,41 +33,25 @@ const map = {
 });
 
 Manager.fetchUI = async function () {
-  const abort = err => {
-    if (db.connection) {
-      db.connection.close();
-    }
-    throw err;
-  };
+  const data = await UI.find();
 
-  try {
-    await db.connect(dbUri);
-    const data = await UI.find();
+  writeJSON(uiFile, data);
 
-    writeJSON(uiFile, data);
-
-    data.forEach(({name, title}) => {
-      ui[name] = title;
-    });
-
-    return db.connection.close();
-  } catch (err) {
-    abort(err);
-  }
+  data.forEach(({name, title}) => {
+    ui[name] = title;
+  });
 };
 
 Manager.preloadUI = function () {
-  if (!Object.keys(ui).length) {
-    ui.greeting = 'Welcome';
+  ui.greeting = 'Welcome';
 
-    readJSONSync(uiFile).forEach(({name, title}) => {
-      ui[name] = title;
-    });
-  }
+  readJSONSync(uiFile).forEach(({name, title}) => {
+    ui[name] = title;
+  });
 };
 
 Manager.initUI = function () {
-  if (!Object.keys(ui).length) {
+  if (true || !Object.keys(ui).length) {
     Manager.preloadUI();
     Manager.fetchUI();
   }
@@ -82,12 +66,16 @@ Manager.run = function ({
   beforeFunc = function () {},
   afterFunc = function () {},
 }) {
-  Manager.initUI();
+  Manager.preloadUI();
 
   describe(ui.greeting || 'Welcome', function () {
     before(function () {
-      // eslint-disable-next-line no-invalid-this
-      return db.connect(dbUri).then(beforeFunc.bind(this));
+      return db.connect(dbUri)
+        .then(() => {
+          Manager.fetchUI();
+        })
+        // eslint-disable-next-line no-invalid-this
+        .then(beforeFunc.bind(this));
     });
 
     after(function () {
@@ -96,7 +84,7 @@ Manager.run = function ({
     });
 
     try {
-      const funcs = title ? [title, itFunc, doFunc] : [itFunc, doFunc];
+      const funcs = title ? [ui[title], itFunc, doFunc] : [itFunc, doFunc];
       new TestWriter(data).defineTests(funcs, arity, describe, it);
     } catch (err) {
       if (err.message.includes('No descriptions provided for tests')) {
